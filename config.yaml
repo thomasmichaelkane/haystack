@@ -1,0 +1,11 @@
+cellpose: 
+    model_path:                   models/Cone-detector-CP_20231207_165954
+    cellprob_threshold:           0  # -6 to 6
+    channels:                     
+        - 0
+        - 0
+
+clustering: 
+    min_samples:                  4
+    max_clustering_distance:      6
+    colormap:                     jet
