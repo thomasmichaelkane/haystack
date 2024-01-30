@@ -91,7 +91,7 @@ def add_points(points, img, color=(0, 255, 255), radius=3, fill=True, add_number
     for point in points:
 
         thickness = -1 if fill is True else 1
-        cv2.circle(img, (point[1], point[0]), radius=radius, color=color, thickness=thickness)
+        cv2.circle(img, (point[0], point[1]), radius=radius, color=color, thickness=thickness)
         
         # if add_numbering: 
         #     try:
