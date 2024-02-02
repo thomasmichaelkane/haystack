@@ -19,12 +19,6 @@ def read_tiff_stack(tiff_file_path):
     
     return tiff_stack
 
-def tiff_stack_to_list(tiff_stack):
-
-    images = [tiff for tiff in tiff_stack]
-    
-    return images
-
 def read_img_folder(img_folder_path):
     
     images = []
@@ -36,7 +30,7 @@ def read_img_folder(img_folder_path):
             image_path = os.path.join(img_folder_path, filename)
             
             # Read TIFF image
-            images.append(cv2.imread(image_path))
+            images.append(tifffile.imread(image_path))
             
     return images
 
@@ -53,29 +47,38 @@ def convert_to_color(frame):
     
     return frame_color
             
-def cut_random_squares(image, num_squares, square_size):
-    height, width, _ = image.shape
+def cut_random_squares(image, is_color, num_squares, square_size):
+    
+    if is_color:
+        height, width, _ = image.shape
+    else:
+        height, width = image.shape
+        
     random_squares = []
 
     for _ in range(num_squares):
         start_x = random.randint(0, width - square_size)
         start_y = random.randint(0, height - square_size)
 
-        square = image[start_y:start_y+square_size, start_x:start_x+square_size, :]
+        if is_color:
+            square = image[start_y:start_y+square_size, start_x:start_x+square_size, :]
+        else:
+            square = image[start_y:start_y+square_size, start_x:start_x+square_size]
+            
         random_squares.append(square)
 
     return random_squares
 
-def random_sampling(images, num_squares, square_size, basename, output_directory):
+def random_sampling(images, is_color, num_squares, square_size, name, output_directory):
     
     # Cut out squares
     for i, image in enumerate(images):    
 
-        cuts = cut_random_squares(image, num_squares, square_size)
-
+        cuts = cut_random_squares(image, is_color, num_squares, square_size)
+        
         # Save cut images
         for j, cut in enumerate(cuts):
-            output_filename = f"{os.path.splitext(basename)[0]}_slice_{i+1}_cut_{j+1}.png"
+            output_filename = f"{name}_slice-{i}_cut-{j+1}.tif"
             cv2.imwrite(os.path.join(output_directory, output_filename), cut)
             
 

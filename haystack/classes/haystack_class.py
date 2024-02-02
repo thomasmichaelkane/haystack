@@ -2,9 +2,9 @@ import os
 import numpy as np
 from cellpose import models, io
 
-from ..utils import parse, logging
-from ..process import display, roi_tools, image_tools, clustering
-from ..utils.utils import *
+from haystack.process import display, roi_tools, image_tools, clustering
+from haystack.utils import parse, logging
+from haystack.utils.util_functions import *
 
 class Haystack():
     
@@ -169,19 +169,19 @@ class Haystack():
 
     def save_raw(self):
         
-        save_stack(self.raw, self.output_directory, "original.tif")
+        save_image(self.raw, self.output_directory, "original.tif")
     
     def save_detections_stack(self):
         
-        save_stack(self.cell_detection_stack, self.output_directory, "detections_raw.tif")
+        save_image(self.cell_detection_stack, self.output_directory, "detections_raw.tif")
 
     def save_detections_stack_on_frames(self):
         
-        save_stack(self.cell_detection_stack_on_frames, self.output_directory, "detections_on_frames.tif")
+        save_image(self.cell_detection_stack_on_frames, self.output_directory, "detections_on_frames.tif")
         
     def save_cumulative_stack(self):
         
-        save_stack(self.cumulative_detection_stack, self.output_directory, "detections_cumulative.tif")
+        save_image(self.cumulative_detection_stack, self.output_directory, "detections_cumulative.tif")
         
     def save_clustering_image(self):
         
@@ -191,8 +191,9 @@ class Haystack():
         
         save_image(self.clustered_cells_image, self.output_directory, "cells_from_clusters.tif")
 
-    def save_all_processing(self):
+    def save_all_processing_images(self, save_raw=False):
 
+        if save_raw: self.save_raw()
         self.save_detections_stack()
         self.save_detections_stack_on_frames()
         self.save_cumulative_stack()

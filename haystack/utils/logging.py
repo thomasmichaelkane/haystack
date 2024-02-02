@@ -9,4 +9,7 @@ def line():
     
     console = Console()
     console.print("---------------", style="magenta")
+
+def warning(message):
     
+    rprint("[bold red]Warning[/bold red] {}".format(message))

@@ -1,29 +1,38 @@
 import sys
 
-from lib.utils import parse
-from lib.utils.utils import load_config
-from lib.obj.haystack import Haystack
+# from haystack.utils import parse
 
-def main():
+from haystack import Haystack, load_config, parse
+
+def run():
     
+    # parse command line arguments for stack/directory path, and whether previous rois are used
     PATH, ROIS_EXIST = parse_args()
     
+    # load_config if using yaml file
     config = load_config()
     
+    # initialize haystacl class
     hs = Haystack(PATH)
     
+    # choose the desired colormap for detected cells
     hs.choose_colormap(config['clustering']['colormap'])
     
+    # choose detection or roi load
     if ROIS_EXIST:
+        # if cellpose has already been run, we can reload the rois directly
         hs.load_rois_directly()
     else:
+        # if not then run cellpose on the stack
         hs.detect_cells(model_path=config['cellpose']['model_path'], 
                         cellprob_threshold=config['cellpose']['cellprob_threshold'],
                         channels=[config['cellpose']['channels']])
     
+    # run clustering algorithm
     hs.cluster_cells(min_samples=config['clustering']['min_samples'], 
                      max_clustering_distance=config['clustering']['max_clustering_distance'])
     
+    # show all processes
     hs.show_stack()
     hs.show_detections_stack()
     hs.show_detections_stack(on_frames=True)
@@ -31,7 +40,8 @@ def main():
     hs.show_clustering()
     hs.show_clustered_cells()
     
-    hs.save_all_processing()
+    # save all processes and clustered cell coordinates
+    hs.save_all_processing_images()
     hs.save_cells_as_coords()
     
 def parse_args():
@@ -56,4 +66,5 @@ def parse_args():
     
     return path, rois_exist
 
-main()
+if __name__ == "__main__":
+    run()

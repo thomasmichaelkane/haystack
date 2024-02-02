@@ -1,5 +1,7 @@
 import os
 
+from . import logging
+
 def rois_exist(arg):
     
     if arg == "1":
@@ -56,17 +58,28 @@ def cellprob(arg):
     except ValueError:
         
         raise NameError("Needs to be a number")
-
+    
 def size(arg):
     
     try:
         size = int(arg)
         
-        if 50 <= size <= 1000:
-            return size
-        else:
-            raise ValueError("Needs to within range 50-1000")
-            
-    except ValueError:
+        if size <= 0:
+            raise ValueError("Square size must be larger than 0")
         
-        raise NameError("Needs to be an integer")
+        return size
+    
+    except ValueError:
+        raise NameError("Square size should be an integer")
+
+def square_vs_image_size(image_size, square_size):
+    
+    if square_size <= 0:
+        raise ValueError("Square size must be larger than 0")
+    elif square_size > image_size:
+        raise ValueError("Square size is larger than image size")
+    elif square_size > image_size/2:
+        logging.warning("Square size is comparble (> 1/2) of image size")
+        
+    if square_size < 50:
+        logging.warning("Square size is very small (< 50 pixels)")
