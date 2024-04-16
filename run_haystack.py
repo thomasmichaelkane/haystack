@@ -1,7 +1,5 @@
 import sys
 
-# from haystack.utils import parse
-
 from haystack import Haystack, load_config, parse
 
 def run():
