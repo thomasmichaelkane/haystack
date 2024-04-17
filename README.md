@@ -103,6 +103,15 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    python -m venv .venv
    ```
+2. Activate environment
+  <small>Windows</small>
+   ```sh
+   .venv/Scripts/activate.ps1  
+   ```
+   <small>Mac/Linux</small>
+   ```sh
+   source .venv/bin/activate
+   ```
 3. Install prerequisites
    ```sh
    python -m pip install -r requirements.txt
