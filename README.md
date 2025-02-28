@@ -39,8 +39,8 @@
     </li>
     <li><a href="#usage">Usage</a></li>
       <ul>
-        <li><a href="#classes">Classes</a></li>
-        <li><a href="#functions">Functions</a></li>
+        <li><a href="#scripts">Scripts</a></li>
+        <li><a href="#api">API</a></li>
       </ul>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -54,17 +54,17 @@ This project is for the purpose of finding the locations of cell types that pose
 
 The below example shows imaging with two channel staining (for human validation/training) and a single channel (the desired imaging method for automated cell differentiation). In the green only channel the two cell types are often seemingly indistinguishable from one another.
 
-<img src="docs/images/dual_channel.png" alt="Logo" width="200">
-<img src="docs/images/single_channel.png" alt="Logo" width="200">
+<img src="docs/images/dual_channel.png" alt="dual-channel" width="200">
+<img src="docs/images/single_channel.png" alt="single-channel" width="200">
 
 Haystack is built on top of cellpose to detect difficult cells such as these across a shallow 3D stack (ones where cells do not significantly overlap). Running the detection model on each slice individually allows for improved robustness and removal of false positives that do not reach a threshold. The detection process is shown below on an input stack, on a black background, and added cumulatively.
 
-<img src="docs/images/detections_video.gif" alt="Logo" width="600">
+<img src="docs/images/detections_video.gif" alt="detections" width="600">
 
 Clustering using sklearn algorithms we can then find the 'true' cells. This outputs a set of coordinates estimating the centre if each cell in a 2D representation, with significantly added robustness in detecting difficult to distinuish cells.
 
-<img src="docs/images/clustering.png" alt="Logo" width="200">
-<img src="docs/images/cells_from_clusters.png" alt="Logo" width="200">
+<img src="docs/images/clustering.png" alt="clustering" width="200">
+<img src="docs/images/cells_from_clusters.png" alt="clusters" width="200">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
